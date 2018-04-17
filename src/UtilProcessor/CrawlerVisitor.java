@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 public class CrawlerVisitor {
 

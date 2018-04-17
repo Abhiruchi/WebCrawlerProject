@@ -2,6 +2,7 @@ package UtilProcessor;
 
 
 import java.io.IOException;
+import java.util.HashSet;
 
 import org.jsoup.Connection.Response;
 import org.jsoup.nodes.Document;
@@ -10,39 +11,37 @@ import org.jsoup.select.Elements;
 
 public class PageParser {
 
+	HashSet<String> hashSet;
+	String mainPageTitle;
+	
 	public PageParser() {
 		// TODO Auto-generated constructor stub
+		hashSet = new HashSet<String>();
+		mainPageTitle = "";
 	}
 
 	void parseContenton(Response response) throws IOException {
 		Document webDoc = response.parse();
 		
-		// get the page title
-	    String title = webDoc.title();
-	      
-		System.out.println("Title: " + title);
-	      
+		// set the page title
+		mainPageTitle = webDoc.title();
+	      	      
 	    // get all links in page
 	    Elements links = webDoc.select("a[href]");
 	   
         for (Element link : links) {
-        	print(" %s", link.attr("abs:href"));
-        }
-        
-		System.out.println("Done");
+        	hashSet.add(link.attr("abs:href"));
 
+        }
         
 	}
 	
-	private static void print(String msg, Object... args) {
-        System.out.println(String.format(msg, args));
-    }
+	HashSet<String> getHashSet() {
+		return hashSet;
+	}
 	
-	private static String trim(String s, int width) {
-        if (s.length() > width)
-            return s.substring(0, width-1) + ".";
-        else
-            return s;
-    }
+	String getPageTitle() {
+		return mainPageTitle;
+	}
 	
 }

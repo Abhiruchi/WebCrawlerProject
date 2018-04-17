@@ -1,9 +1,9 @@
 package OutputProcessor;
 
-public class OutputResultsProcessor {
+import java.util.HashSet;
 
-	public OutputResultsProcessor() {
-		// TODO Auto-generated constructor stub
-	}
+public interface OutputResultsProcessor {
+
+	void handleOutput(String string, HashSet<String> hashSet);
 
 }

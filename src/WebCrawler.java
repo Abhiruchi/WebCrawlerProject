@@ -22,6 +22,9 @@ public class WebCrawler {
 		
 		WebCrawlerUtil crawlerOperation = new WebCrawlerUtilImpl();
 		crawlerOperation.crawlWebURLToGivenDepth(input.GetURLString(), input.GetDepth());
+	
+		OutputResultsProcessor output = new OutputResultsProcessorImpl();
+		output.handleOutput(crawlerOperation.getParserDataTitle(), crawlerOperation.getParserHashSet());
 		
 	}
 
