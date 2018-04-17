@@ -1,9 +1,10 @@
 package InputProcessor;
 
-public class InputQueryProcessor {
+import java.io.IOException;
 
-	public InputQueryProcessor() {
-		// TODO Auto-generated constructor stub
-	}
+public interface InputQueryProcessor {
+	
+	void processInput(String baseURL, int depth);
+	void handleInput() throws IOException;
 
 }
