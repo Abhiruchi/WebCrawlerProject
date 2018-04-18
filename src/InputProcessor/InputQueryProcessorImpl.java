@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 
 public class InputQueryProcessorImpl implements InputQueryProcessor {
 	
-	InputModel model;
+	InputModel modelQuery;
 	
 	public InputQueryProcessorImpl() {
-        model = new InputModel();
+		modelQuery = new InputModel();
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class InputQueryProcessorImpl implements InputQueryProcessor {
         String webURL = "";
         int reqDepth = 0;
         
-        // Reading data 
+        // Reading web url
         try {
         	webURL = reader.readLine();
         } catch(Exception e) {
@@ -32,24 +32,25 @@ public class InputQueryProcessorImpl implements InputQueryProcessor {
         
         System.out.println("Enter required depth to crawl");   
 
+        // Reading depth
         try {
             reqDepth = Integer.parseInt(reader.readLine());
         } catch(Exception e) {
             System.out.println("Invalid input" + e.toString());
         }
         
-        
 
-        model.SetDepth(reqDepth);
-        model.SetURLString(webURL);
+        modelQuery.SetDepth(reqDepth);
+        modelQuery.SetURLString(webURL);
         
-        // Printing the read line
+        // Reading for web url and depth
         System.out.println("Crawling for " + webURL + " till depth = " + reqDepth);
         
 	}
 	
-	public InputModel GetInputModel() {
-		return model;
+	public InputModel GetInputQuery() {
+		return modelQuery;
 	}
+
 
 }

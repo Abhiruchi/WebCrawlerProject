@@ -1,9 +1,9 @@
 package OutputProcessor;
 
-import java.util.HashSet;
+import UtilProcessor.WebCrawlerUtil;
 
 public interface OutputResultsProcessor {
 
-	void handleOutput(String string, HashSet<String> hashSet);
+	void handleOutput(WebCrawlerUtil crawlerOp);
 
 }

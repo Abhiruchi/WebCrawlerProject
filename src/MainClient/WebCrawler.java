@@ -1,5 +1,6 @@
 package MainClient;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import InputProcessor.*;
 import OutputProcessor.*;
@@ -9,12 +10,10 @@ public class WebCrawler {
 
 	
 	public WebCrawler() {
-		// TODO Auto-generated constructor stub
-		
+		// TODO Auto-generated constructor stub	
 	}
 
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
+	public static void main(String[] args) throws IOException, URISyntaxException {
 		
 		InputQueryProcessor input = new InputQueryProcessorImpl();
 		input.handleInput();
@@ -23,7 +22,7 @@ public class WebCrawler {
 		crawlerOperation.crawlWebURLToGivenDepth(input);
 	
 		OutputResultsProcessor output = new OutputResultsProcessorImpl();
-		output.handleOutput(crawlerOperation.getParserDataTitle(), crawlerOperation.getParserHashSet());
+		output.handleOutput(crawlerOperation);
 		
 	}
 

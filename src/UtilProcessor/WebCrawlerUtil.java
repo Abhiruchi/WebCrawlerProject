@@ -1,15 +1,14 @@
 package UtilProcessor;
 
 import java.io.IOException;
-import java.util.HashSet;
-
+import java.net.URISyntaxException;
+import java.util.HashMap;
 import InputProcessor.InputQueryProcessor;
 
 public interface WebCrawlerUtil {
 	
-	void crawlWebURLToGivenDepth(InputQueryProcessor input) throws IOException;
+	void crawlWebURLToGivenDepth(InputQueryProcessor input) throws IOException, URISyntaxException;
 
-	String getParserDataTitle();
+	HashMap<String, String> getParsedDataOutput();
 
-	HashSet<String> getParserHashSet();
 }

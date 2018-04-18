@@ -11,9 +11,10 @@ public class CrawlerVisitor {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Response crawlOnResponse(String webURL) throws IOException {
+	public Response crawlOnQuery(QueryProcessor queryModel) throws IOException {
 
 		// Connect to web URL, following Robot Protocol 
+		String webURL = queryModel.GetQuery();
 		
 		Response response= Jsoup.connect(webURL)
 		           .ignoreContentType(true)
