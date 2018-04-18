@@ -1,26 +1,26 @@
 package UtilProcessor.model;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class WebCrawlerInfoModel {
 
-	HashMap<String, String> crawlerInfoOutputModel;
+	LinkedHashMap<String, String> crawlerInfoOutputModel;
 
 	public WebCrawlerInfoModel() {
 		// TODO Auto-generated constructor stub
-		crawlerInfoOutputModel = new HashMap<String, String>(); 
+		crawlerInfoOutputModel = new LinkedHashMap<String, String>(); 
 
 	}
 	
-	void SetCrawlerOutputInfoModel(HashMap<String, String> crawlerInfoOutputModelData) {
+	void SetCrawlerOutputInfoModel(LinkedHashMap<String, String> crawlerInfoOutputModelData) {
 		crawlerInfoOutputModel = crawlerInfoOutputModelData;
 	}
 	
-	public void AddToCrawlerOutputInfoModel(String webURL, String title) {
-		crawlerInfoOutputModel.put(webURL, title);
+	public void AddToCrawlerOutputInfoModel(String title, String webURL) {
+		crawlerInfoOutputModel.put(title, webURL);
 	}
 	
-	public HashMap<String, String> GetCrawlerOutputInfoModel() {
+	public LinkedHashMap<String, String> GetCrawlerOutputInfoModel() {
 		return crawlerInfoOutputModel;
 	}
 

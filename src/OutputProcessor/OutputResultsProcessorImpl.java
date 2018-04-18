@@ -20,15 +20,13 @@ public class OutputResultsProcessorImpl implements OutputResultsProcessor {
 		System.out.println("OUTPUT ------- ");
 
 		// Output the parsed data output after crawler operation
-		System.out.println(crawlerOp.getParsedDataOutput());
-		
 		//Delimiter used in CSV file
 		final String COMMA_DELIMITER = ",";
 		final String NEW_LINE_SEPARATOR = "\n";
 		
 		//CSV file header
 		final String FILE_HEADER = "TITLE , WEB URL";
-		String fileName = "abc.csv";
+		String fileName = "results.csv";
 
 		FileWriter fileWriter = null;
 		
@@ -47,7 +45,6 @@ public class OutputResultsProcessorImpl implements OutputResultsProcessor {
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(entry.getValue());
 				fileWriter.append(NEW_LINE_SEPARATOR);
-
 			}
 
 			System.out.println("CSV file was created successfully !!!");
