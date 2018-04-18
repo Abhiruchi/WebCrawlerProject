@@ -3,11 +3,11 @@ package UtilProcessor;
 import java.io.IOException;
 import java.util.HashSet;
 
+import InputProcessor.InputQueryProcessor;
+
 public interface WebCrawlerUtil {
 	
-	void crawlWebURLToGivenDepth(String webURL, int depth) throws IOException;
-
-	HashSet<String> getData();
+	void crawlWebURLToGivenDepth(InputQueryProcessor input) throws IOException;
 
 	String getParserDataTitle();
 

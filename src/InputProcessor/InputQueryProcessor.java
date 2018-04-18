@@ -5,9 +5,7 @@ import java.io.IOException;
 public interface InputQueryProcessor {
 	
 	void handleInput() throws IOException;
+	public InputModel GetInputModel();
 
-	String GetURLString();
-
-	int GetDepth();
 
 }

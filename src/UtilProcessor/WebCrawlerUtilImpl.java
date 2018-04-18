@@ -5,6 +5,8 @@ import java.util.HashSet;
 
 import org.jsoup.Connection.Response;
 
+import InputProcessor.InputQueryProcessor;
+
 public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 
 	PageParser parser;
@@ -15,13 +17,15 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 	}
 
 	@Override
-	public void crawlWebURLToGivenDepth(String webURL, int depth) throws IOException {
+	public void crawlWebURLToGivenDepth(InputQueryProcessor input) throws IOException {
 		
 		CrawlerVisitor crawler = new CrawlerVisitor();
-		Response response = crawler.crawlOnResponse(webURL);
-		
-		parser.parseContenton(response);
-		        
+		try {
+			Response response = crawler.crawlOnResponse(input.GetInputModel().GetURLString());
+			parser.parseContenton(response);
+		} catch (Exception e) {
+			System.out.println("Error!! Could not find page response for the given input");
+		}        
 	}
 
 	@Override
@@ -35,13 +39,6 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 		// TODO Auto-generated method stub
 		return parser.getHashSet();
 	}
-
-	@Override
-	public HashSet<String> getData() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	
 
 }

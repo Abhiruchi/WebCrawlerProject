@@ -5,15 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class InputQueryProcessorImpl implements InputQueryProcessor {
-
-	static String webURL = "";
-	static int reqDepth = 0;
+	
+	InputModel model;
 	
 	public InputQueryProcessorImpl() {
-		webURL = "";
-		reqDepth = 0;	
+        model = new InputModel();
 	}
-
 
 	@Override
 	public void handleInput() throws IOException {
@@ -23,24 +20,36 @@ public class InputQueryProcessorImpl implements InputQueryProcessor {
         BufferedReader reader = 
                    new BufferedReader(new InputStreamReader(System.in));
         
+        String webURL = "";
+        int reqDepth = 0;
+        
         // Reading data 
-        webURL = reader.readLine();
- 
+        try {
+        	webURL = reader.readLine();
+        } catch(Exception e) {
+            System.out.println("Invalid input" + e.toString());
+        }
+        
         System.out.println("Enter required depth to crawl");   
 
-        reqDepth = Integer.parseInt(reader.readLine());
+        try {
+            reqDepth = Integer.parseInt(reader.readLine());
+        } catch(Exception e) {
+            System.out.println("Invalid input" + e.toString());
+        }
+        
+        
 
+        model.SetDepth(reqDepth);
+        model.SetURLString(webURL);
+        
         // Printing the read line
         System.out.println("Crawling for " + webURL + " till depth = " + reqDepth);
         
 	}
 	
-	public String GetURLString() {
-		return webURL;
-	}
-	
-	public int GetDepth() {
-		return reqDepth;
+	public InputModel GetInputModel() {
+		return model;
 	}
 
 }

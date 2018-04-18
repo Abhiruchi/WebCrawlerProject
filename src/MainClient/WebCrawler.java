@@ -1,3 +1,4 @@
+package MainClient;
 import java.io.IOException;
 
 import InputProcessor.*;
@@ -18,10 +19,8 @@ public class WebCrawler {
 		InputQueryProcessor input = new InputQueryProcessorImpl();
 		input.handleInput();
 		
-		System.out.println(input.GetURLString());
-		
 		WebCrawlerUtil crawlerOperation = new WebCrawlerUtilImpl();
-		crawlerOperation.crawlWebURLToGivenDepth(input.GetURLString(), input.GetDepth());
+		crawlerOperation.crawlWebURLToGivenDepth(input);
 	
 		OutputResultsProcessor output = new OutputResultsProcessorImpl();
 		output.handleOutput(crawlerOperation.getParserDataTitle(), crawlerOperation.getParserHashSet());
