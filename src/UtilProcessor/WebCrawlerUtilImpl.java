@@ -65,10 +65,19 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
     	String domainName = "";
     	
     	try {
-    		URI uri = new URI(input.GetInputQuery().GetURLString());
+    		/*URI uri = new URI(input.GetInputQuery().GetURLString());
         	domainName = uri.getHost();
         	domainName.replaceFirst("^(https?://)?(www\\.)?(http?://)?", "");
-
+    		 */
+        	
+        	URI uri = new URI(input.GetInputQuery().GetURLString());
+    	    String domain = uri.getHost();
+    	    
+    	    if (domain.startsWith("www."))
+    			domainName =  (String) domain.substring(4);
+    		else
+    			domainName =  (String) domain;
+    	    
 		} catch (Exception e) {
 			System.out.println("Could not find Domain for " + input.GetInputQuery().GetURLString());
 		}
@@ -80,13 +89,12 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 			
 			linksToCrawlAtNextLevel.clear();
 			
-			System.out.println("Crawling at Level " + (currDepth));
-
 	        while (linksToCrawl.size() != 0) {
+		      
 	        	String currURL = linksToCrawl.poll();
 	        	QueryProcessor query = new QueryProcessor();
 	        	query.SetQuery(currURL);
-		       
+		        System.out.println(currURL);
 	        	if ( !crawledLinks.contains(currURL) ) {
 	              
 	        		try {
@@ -95,9 +103,10 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 	        			
 	        			if (currDepth + 1 <= maxDepth) {
 			        		for (String queryString: pageParserModel.GetLinkedPages()) {
-			        				
+			            		//System.out.println("Test link " + queryString);
+
 						            if (LinkedPageIsInSameDomainMatcher(queryString, domainName) == true) {
-						            	
+						            		//System.out.println("Add link " + queryString);
 						            		linksToCrawlAtNextLevel.add(queryString);
 						            }
 			        		}
@@ -111,7 +120,7 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 				      }
 		        	
 				} else {
-					System.out.println("Title for" + currURL + "is tracked already !!");
+					System.out.println("Title for " + currURL + "is tracked already !!");
 				}
 	        	crawledLinks.add(currURL);
 			}
@@ -122,12 +131,20 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 
 		try {
 			URI uri = new URI(currWebURL);
-	
-	    	String domainNameCurrURL = uri.getHost();
-		    
-	    	domainNameCurrURL.replaceFirst("^(https?://)?(www\\.)?(http?://)?", "");
+    	    String domain = uri.getHost();
+    	    String domainNameCurrURL = "";
+    	    
+    	    if (domain.startsWith("www."))
+    	    	domainNameCurrURL =  (String) domain.substring(4);
+    		else
+    			domainNameCurrURL =  (String) domain;
+
+
+	    	/* print this to debug
+	    	 * System.out.println("match " + domainNameCurrURL + " and " + domainURL);
+	    	*/
 	    	
-	    	if (domainNameCurrURL.equals(domainURL)) {
+	    	if (domainNameCurrURL.contains(domainURL)) {
 	    		return true;
 	    	}
     	
