@@ -3,6 +3,7 @@ package UtilProcessor;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+
 import InputProcessor.InputQueryProcessor;
 
 public interface WebCrawlerUtil {

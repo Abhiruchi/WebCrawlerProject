@@ -4,8 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
-
 import UtilProcessor.WebCrawlerUtil;
 
 public class OutputResultsProcessorImpl implements OutputResultsProcessor {

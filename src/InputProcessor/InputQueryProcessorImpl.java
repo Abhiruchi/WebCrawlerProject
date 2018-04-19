@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 
 public class InputQueryProcessorImpl implements InputQueryProcessor {
 	
-	InputModel modelQuery;
+	InputModel inputModelQuery;
 	
 	public InputQueryProcessorImpl() {
-		modelQuery = new InputModel();
+		inputModelQuery = new InputModel();
 	}
 
 	@Override
@@ -40,16 +40,16 @@ public class InputQueryProcessorImpl implements InputQueryProcessor {
         }
         
 
-        modelQuery.SetDepth(reqDepth);
-        modelQuery.SetURLString(webURL);
+        inputModelQuery.SetDepth(reqDepth);
+        inputModelQuery.SetURLString(webURL);
         
-        // Reading for web url and depth
+        // Reading for input: web url and depth
         System.out.println("Crawling for " + webURL + " till depth = " + reqDepth);
         
 	}
 	
 	public InputModel GetInputQuery() {
-		return modelQuery;
+		return inputModelQuery;
 	}
 
 

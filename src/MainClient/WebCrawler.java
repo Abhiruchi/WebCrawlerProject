@@ -18,11 +18,11 @@ public class WebCrawler {
 		InputQueryProcessor input = new InputQueryProcessorImpl();
 		input.handleInput();
 		
-		WebCrawlerUtil crawlerOperation = new WebCrawlerUtilImpl();
-		crawlerOperation.crawlWebURLToGivenDepth(input);
+		WebCrawlerUtil crawlerOperationImpl = new WebCrawlerUtilImpl();
+		crawlerOperationImpl.crawlWebURLToGivenDepth(input);
 	
 		OutputResultsProcessor output = new OutputResultsProcessorImpl();
-		output.handleOutput(crawlerOperation);
+		output.handleOutput(crawlerOperationImpl);
 		
 	}
 

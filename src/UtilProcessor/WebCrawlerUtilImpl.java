@@ -43,8 +43,7 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 	@Override
 	public void crawlWebURLToGivenDepth(InputQueryProcessor input) throws IOException, URISyntaxException {
 		try {
-			UtilOp(input);
-			
+			UtilOp(input);	
 		} catch (Exception e) {
 			System.out.println("Error!! Could not find page responses for the given input");
 		}        
@@ -61,17 +60,8 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 	private void UtilOp(InputQueryProcessor input) throws IOException, URISyntaxException {
 			
         int maxDepth = input.GetInputQuery().GetDepth();
-            	
-    	///if (maxDepth != 0)
+      
     	linksToCrawlAtNextLevel.add(input.GetInputQuery().GetURLString());
-    	/*else {
-			System.out.println("Processing for level 0" );
-
-        	query.SetQuery(input.GetInputQuery().GetURLString());        	
-        	crawlerOnQueryOp(query);
-    		outputInfoModel.AddToCrawlerOutputInfoModel(pageParserModel.GetPageTitle(), pageParserModel.GetPageURL());	
-    		return;
-    	}*/
     	
     	URI uri = new URI(input.GetInputQuery().GetURLString());
 	    String domain = uri.getHost();
@@ -86,20 +76,15 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 		for (int currDepth = 0; currDepth <= maxDepth; currDepth++) {
 			System.out.println("Processing for level " + (currDepth));
 			
-			System.out.println(linksToCrawlAtNextLevel);
-
-			LinkedList<String> clone = (LinkedList<String>) linksToCrawlAtNextLevel.clone();
-			linksToCrawl = clone;
+			linksToCrawl = (LinkedList<String>) linksToCrawlAtNextLevel.clone();
 			
 			linksToCrawlAtNextLevel.clear();
-			
-			System.out.println(linksToCrawl);
 			
 	        while (linksToCrawl.size() != 0) {
 	        	String currURL = linksToCrawl.poll();
 	        	QueryProcessor query = new QueryProcessor();
 	        	query.SetQuery(currURL);
-		        System.out.println("Crawling For Level " + (currDepth) + " for url : " + currURL );
+		        System.out.println("Crawling at Level " + (currDepth) + " for url : " + currURL );
 
 	        	if ( !crawledLinks.contains(currURL) ) {
 	              
@@ -110,7 +95,7 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 	        			if (currDepth + 1 <= maxDepth) {
 			        		for (String queryString: pageParserModel.GetLinkedPages()) {
 			        				
-						            if (LinkedPageIsInSameDomain(queryString, domainName) == true) {
+						            if (LinkedPageIsInSameDomainMatcher(queryString, domainName) == true) {
 						            	
 						            		linksToCrawlAtNextLevel.add(queryString);
 						            }
@@ -124,14 +109,14 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 				      }
 		        	
 				} else {
-					System.out.println("Title Tracked already !!");
+					System.out.println("Title is Tracked already !!");
 				}
 	        	crawledLinks.add(currURL);
 			}
 		}
 	}
 	
-	private boolean LinkedPageIsInSameDomain(String currWebURL, String domainURL) {
+	private boolean LinkedPageIsInSameDomainMatcher(String currWebURL, String domainURL) {
 
 		String patternString = ".*" + domainURL + ".*";
         Pattern pattern = Pattern.compile(patternString);
@@ -139,11 +124,10 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
         Matcher matcher = pattern.matcher(currWebURL);
         boolean matches = matcher.matches();
         
-		//System.out.println("Does domain url = " + patternString + " consists of curr web url =  " + currWebURL + ". Answer is " + matches);
-
 		return matches;
 		
 	}
+	
 	@Override
 	public HashMap<String, String>  getParsedDataOutput() {
 		// TODO Auto-generated method stub
