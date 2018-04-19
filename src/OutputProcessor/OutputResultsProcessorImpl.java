@@ -49,7 +49,6 @@ public class OutputResultsProcessorImpl implements OutputResultsProcessor {
 			
 		} catch (Exception e) {
 			System.out.println("Error in CsvFileWriter !!!");
-			e.printStackTrace();
 		} finally {
 			
 			try {

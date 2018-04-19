@@ -24,7 +24,6 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 	WebCrawlerInfoModel outputInfoModel;
 	QueryProcessor query;
 
-	//private HashSet<String> linksToCrawl;
 	private HashSet<String> crawledLinks;
 	private LinkedList<String> linksToCrawl;
 	private LinkedList<String> linksToCrawlAtNextLevel;
@@ -63,15 +62,16 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
       
     	linksToCrawlAtNextLevel.add(input.GetInputQuery().GetURLString());
     	
-    	URI uri = new URI(input.GetInputQuery().GetURLString());
-	    String domain = uri.getHost();
-	    String domainName = "";
-	    
-	    if (domain.startsWith("www."))
-			domainName =  (String) domain.substring(4);
-		else
-			domainName =  (String) domain;
-        
+    	String domainName = "";
+    	
+    	try {
+    		URI uri = new URI(input.GetInputQuery().GetURLString());
+        	domainName = uri.getHost();
+        	domainName.replaceFirst("^(https?://)?(www\\.)?(http?://)?", "");
+
+		} catch (Exception e) {
+			System.out.println("Could not find Domain for " + input.GetInputQuery().GetURLString());
+		}
     	
 		for (int currDepth = 0; currDepth <= maxDepth; currDepth++) {
 			System.out.println("Processing for level " + (currDepth));
@@ -80,12 +80,13 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 			
 			linksToCrawlAtNextLevel.clear();
 			
+			System.out.println("Crawling at Level " + (currDepth));
+
 	        while (linksToCrawl.size() != 0) {
 	        	String currURL = linksToCrawl.poll();
 	        	QueryProcessor query = new QueryProcessor();
 	        	query.SetQuery(currURL);
-		        System.out.println("Crawling at Level " + (currDepth) + " for url : " + currURL );
-
+		       
 	        	if ( !crawledLinks.contains(currURL) ) {
 	              
 	        		try {
@@ -101,31 +102,40 @@ public class WebCrawlerUtilImpl implements WebCrawlerUtil {
 						            }
 			        		}
 	        			}
-	        			if (outputInfoModel.GetCrawlerOutputInfoModel().get(pageParserModel.GetPageTitle()) == null)
+	        			if (outputInfoModel.GetCrawlerOutputInfoModel().get(pageParserModel.GetPageTitle()) == null) {
 	        				outputInfoModel.AddToCrawlerOutputInfoModel(pageParserModel.GetPageTitle(), pageParserModel.GetPageURL());
-
+	        				System.out.println("Title : " + pageParserModel.GetPageTitle() + " URL: " + pageParserModel.GetPageURL());
+	        			}
 				      } catch (IOException e) {
 				        System.err.println("For : " + currURL + "': " + e.getMessage());
 				      }
 		        	
 				} else {
-					System.out.println("Title is Tracked already !!");
+					System.out.println("Title for" + currURL + "is tracked already !!");
 				}
 	        	crawledLinks.add(currURL);
 			}
 		}
 	}
 	
-	private boolean LinkedPageIsInSameDomainMatcher(String currWebURL, String domainURL) {
+	private boolean LinkedPageIsInSameDomainMatcher(String currWebURL, String domainURL) throws URISyntaxException {
 
-		String patternString = ".*" + domainURL + ".*";
-        Pattern pattern = Pattern.compile(patternString);
-
-        Matcher matcher = pattern.matcher(currWebURL);
-        boolean matches = matcher.matches();
-        
-		return matches;
-		
+		try {
+			URI uri = new URI(currWebURL);
+	
+	    	String domainNameCurrURL = uri.getHost();
+		    
+	    	domainNameCurrURL.replaceFirst("^(https?://)?(www\\.)?(http?://)?", "");
+	    	
+	    	if (domainNameCurrURL.equals(domainURL)) {
+	    		return true;
+	    	}
+    	
+		} catch (Exception e) {
+			System.out.println("Unmatching Domains for " + currWebURL + " with " + domainURL);
+		}
+		return false;
+  
 	}
 	
 	@Override
